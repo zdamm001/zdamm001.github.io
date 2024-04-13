@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fetch Base64 String</title>
+    </head>
+    <body>
+        <h1>Base64 String from URL</h1>
+        <input type="number" id="fileNumber" placeholder="Enter file number">
+        <button onclick="fetchBase64String()">Fetch Base64 String</button>
+        <div id="base64Output"></div>
+
+        <script>
+            function fetchBase64String() {
+                let fileNumber = document.getElementById('fileNumber').value.trim();
+
+                let url = `http://bucket.thewayoftheninja.org/${fileNumber}-10939.txt`;
+
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network unavailable');
+                        }
+                        document.getElementById('base64Output').textContent = response.text();
+                        return response.text();
+                    })
+                    .then(data => {
+                        document.getElementById('base64Output').textContent = data.trim();
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                        alert(error);
+                    });
+            }
+        </script>
+    </body>
+</html>

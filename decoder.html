@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Nv2 Replay Decoder</title>
+        <link rel="stylesheet" href="decoder.css">
+    </head>
+    <body>
+        <h1>Nv2 Replay Decoder</h1>
+        <textarea id="base64Input" rows="5" cols="50" placeholder="Enter base64 encoded data here..."></textarea><br>
+        <button onclick="decodeBase64()">Decode</button><br>
+        <div id="decodedOutput"></div>
+
+        <script src="decoder.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.0.3/pako.min.js"></script>
+    </body>
+</html>

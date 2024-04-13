@@ -12,26 +12,24 @@
         <div id="base64Output"></div>
 
         <script>
-            function fetchBase64String() {
+            async function fetchBase64String() {
                 let fileNumber = document.getElementById('fileNumber').value.trim();
 
                 let url = `http://bucket.thewayoftheninja.org/${fileNumber}-10939.txt`;
 
-                fetch(url)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network unavailable');
-                        }
-                        document.getElementById('base64Output').textContent = response.text();
-                        return response.text();
-                    })
-                    .then(data => {
-                        document.getElementById('base64Output').textContent = data.trim();
-                    })
-                    .catch(error => {
-                        console.error('There was a problem with the fetch operation:', error);
-                        alert(error);
-                    });
+                try{
+                    let response = await fetch(url);
+
+                    if (!response.ok) {
+                        throw new Error('Network unavailable');
+                    }
+                    let data = await response.text();
+
+                    document.getElementById('base64Output').textContent = data.trim();
+                } catch (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+                    alert('Failed to fetch base64 string.\n' + error.text);
+                }
             }
         </script>
     </body>

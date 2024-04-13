@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <title>Fetch Base64 String</title>
     </head>
     <body>
@@ -28,7 +29,7 @@
                     document.getElementById('base64Output').textContent = data.trim();
                 } catch (error) {
                     console.error('There was a problem with the fetch operation:', error);
-                    alert('Failed to fetch base64 string.\n' + error.text);
+                    alert('Failed to fetch base64 string.\n' + error);
                 }
             }
         </script>

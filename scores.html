@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Highscores</title>
+</head>
+<body>
+    <button id="download" style="display:none;">Download Highscores</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to get URL parameters
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+
+            // Get 'path' and 'rnd' parameters from the URL
+            const path = getUrlParameter('path');
+            const rnd = getUrlParameter('rnd');
+
+            // Validate the path parameter
+            const pathRegex = /^highscores\/(\d)\/(\d{2})\/(\d{3})\.txt$/;
+            if (!path || !pathRegex.test(path)) {
+                // Print "404 Not Found" in plain text
+                document.body.innerText = "404 Not Found";
+                return;
+            }
+
+            // Extract the numbers from the path
+            const matches = path.match(pathRegex);
+            const number = matches ? matches.slice(1).join('') : '';
+
+            // Construct the filename
+            const filename = matches ? matches[3] : '' + '.txt';
+
+            // Content to be written in the file
+            let content = number;
+            if (rnd) {
+                content += "\n" + rnd;
+            }
+
+            // Create a blob from the content and trigger download
+            const blob = new Blob([content], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+</html>
